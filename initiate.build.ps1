@@ -6,7 +6,7 @@
 Write-Output "Initiating build environment"
 if(!(Get-PackageProvider -Name NuGet -ListAvailable -ErrorAction Ignore))
 {
-    Install-PackageProvider -Name NuGet -Force
+    Install-PackageProvider -Name NuGet -Force -Scope CurrentUser
 }
 
 if (!(Get-PSRepository -Name PSGallery -ErrorAction Ignore))
@@ -19,7 +19,7 @@ $requiredModules = @(@{Name='Pester';Version='3.4.3'}, @{Name='BuildHelpers';Ver
 
 foreach ($Resource in $RequiredModules)
     {
-        Install-Module -Name $Resource.Name -RequiredVersion $Resource.Version -Repository 'PSGallery' -Force
+        Install-Module -Name $Resource.Name -RequiredVersion $Resource.Version -Repository 'PSGallery' -Force -Scope CurrentUser
     }
 
 Write-Output "Invoking Psake build script"
